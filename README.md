@@ -110,10 +110,9 @@ The activity area shows scheduling, rescheduling, cancellation, and error states
 
 ## Video
 
-Add a walkthrough video to the `Assets` folder and link it here, for example:
-
+The video should show Google login, scheduling a Meet using natural language, listing meetings, rescheduling, cancelling, and logout.
 
 https://github.com/user-attachments/assets/3ee7fbd5-19c7-4fc2-a86e-186f808089ce
 
 
-The video should show Google login, scheduling a Meet using natural language, listing meetings, rescheduling, cancelling, and logout.
+
