@@ -107,7 +107,7 @@ The main portal provides Google connection status, natural-language and voice as
 
 The activity area shows scheduling, rescheduling, cancellation, and error states as readable cards instead of raw API responses.
 
-![AI Google Meet Assistant activity view](Assets/Screenshot%202026-05-30%20090602.png)
+![AI Google Meet Assistant activity view](Assets/Screenshot%202026-05-30%20174511.png)
 
 ## Video
 
