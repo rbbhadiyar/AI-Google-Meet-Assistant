@@ -5,6 +5,7 @@ const listBtn = document.getElementById("listBtn");
 const cancelBtn = document.getElementById("cancelBtn");
 const rescheduleBtn = document.getElementById("rescheduleBtn");
 const parseBtn = document.getElementById("parseBtn");
+const voiceBtn = document.getElementById("voiceBtn");
 const clearOutputBtn = document.getElementById("clearOutputBtn");
 const output = document.getElementById("output");
 const authStatus = document.getElementById("authStatus");
@@ -76,7 +77,8 @@ const meetingIdentifierPayload = (value) => {
   if (!cleaned) {
     return { event_id: undefined, query: undefined };
   }
-  if (!/\s/.test(cleaned)) {
+  const looksLikeGoogleEventId = /^[a-z0-9_@.-]{10,}$/i.test(cleaned);
+  if (!/\s/.test(cleaned) && looksLikeGoogleEventId) {
     return { event_id: cleaned, query: undefined };
   }
   return { event_id: undefined, query: cleaned };
@@ -270,7 +272,7 @@ const runCancelFromParsed = async (parsed) => {
   return fetchJson(`/events/cancel?email=${encodeURIComponent(email)}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(meetingIdentifierPayload(identifier)),
+    body: JSON.stringify({ ...meetingIdentifierPayload(identifier), date: parsed.date || undefined }),
   });
 };
 
@@ -292,6 +294,7 @@ const runRescheduleFromParsed = async (parsed) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       ...meetingIdentifierPayload(identifier),
+      date: parsed.date || undefined,
       new_start: start.toISOString(),
       new_end: end.toISOString(),
     }),
@@ -442,7 +445,69 @@ rescheduleBtn.addEventListener("click", async () => {
   }
 });
 
-parseBtn.addEventListener("click", async () => {
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recognition = null;
+let isListening = false;
+let voiceTranscript = "";
+
+const setVoiceButtonState = (label, listening = false) => {
+  voiceBtn.classList.toggle("is-listening", listening);
+  voiceBtn.setAttribute("aria-label", label);
+  voiceBtn.setAttribute("title", label);
+};
+
+if (SpeechRecognition) {
+  recognition = new SpeechRecognition();
+  recognition.lang = "en-US";
+  recognition.interimResults = true;
+  recognition.continuous = false;
+
+  recognition.addEventListener("start", () => {
+    isListening = true;
+    voiceTranscript = "";
+    setVoiceButtonState("Listening. Click to stop voice input.", true);
+    showToast({ title: "Voice input started", message: "Speak your meeting command.", type: "info" });
+  });
+
+  recognition.addEventListener("result", (event) => {
+    const transcript = Array.from(event.results)
+      .map((result) => result[0].transcript)
+      .join(" ")
+      .trim();
+    voiceTranscript = transcript;
+    document.getElementById("nlText").value = transcript;
+  });
+
+  recognition.addEventListener("end", () => {
+    isListening = false;
+    setVoiceButtonState("Start voice input");
+    if (voiceTranscript.trim()) {
+      runAssistant();
+    }
+  });
+
+  recognition.addEventListener("error", (event) => {
+    showToast({
+      title: "Voice input unavailable",
+      message: event.error === "not-allowed" ? "Allow microphone access in your browser." : `Speech recognition failed: ${event.error}`,
+      type: "error",
+    });
+  });
+} else {
+  voiceBtn.disabled = true;
+  setVoiceButtonState("Voice input unavailable");
+}
+
+voiceBtn.addEventListener("click", () => {
+  if (!recognition) return;
+  if (isListening) {
+    recognition.stop();
+    return;
+  }
+  recognition.start();
+});
+
+const runAssistant = async () => {
   setBusy(parseBtn, true, "Working...");
   try {
     const text = document.getElementById("nlText").value.trim();
@@ -492,7 +557,9 @@ parseBtn.addEventListener("click", async () => {
   } finally {
     setBusy(parseBtn, false);
   }
-});
+};
+
+parseBtn.addEventListener("click", runAssistant);
 
 clearOutputBtn.addEventListener("click", () => {
   output.textContent = "Ready.";

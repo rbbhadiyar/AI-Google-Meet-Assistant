@@ -172,6 +172,14 @@ textarea {
   line-height: 1.5;
 }
 
+.command-input {
+  position: relative;
+}
+
+.command-input textarea {
+  padding-right: 66px;
+}
+
 input::placeholder,
 textarea::placeholder {
   color: #94a3b8;
@@ -242,6 +250,11 @@ textarea:focus {
   box-shadow: var(--shadow-md);
 }
 
+.results-panel {
+  display: grid;
+  gap: 16px;
+}
+
 .tool-panel {
   display: none;
 }
@@ -254,6 +267,14 @@ textarea:focus {
 .panel-heading {
   justify-content: space-between;
   align-items: flex-start;
+}
+
+.results-panel .panel-heading {
+  gap: 20px;
+}
+
+.results-panel .ghost-btn {
+  flex-shrink: 0;
 }
 
 .form-grid,
@@ -309,6 +330,40 @@ textarea:focus {
 
 .danger-btn {
   color: #ffffff;
+  background: var(--danger);
+  box-shadow: 0 8px 18px rgba(220, 38, 38, 0.18);
+}
+
+.voice-btn {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  color: var(--accent);
+  border: 1px solid #bfd2ff;
+  background: #eff6ff;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: transform 0.16s ease, background 0.16s ease, opacity 0.16s ease, box-shadow 0.16s ease;
+}
+
+.voice-btn svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.1;
+}
+
+.voice-btn.is-listening {
+  color: #ffffff;
+  border-color: var(--danger);
   background: var(--danger);
   box-shadow: 0 8px 18px rgba(220, 38, 38, 0.18);
 }

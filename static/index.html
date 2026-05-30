@@ -50,7 +50,17 @@
             </div>
             <button id="listBtn" class="secondary-btn" type="button">Refresh upcoming</button>
           </div>
-          <textarea id="nlText" rows="5" placeholder="Schedule a meeting with Ram tomorrow at 4 PM for 30 mins"></textarea>
+          <div class="command-input">
+            <textarea id="nlText" rows="5" placeholder="Schedule a meeting with Ram tomorrow at 4 PM for 30 mins"></textarea>
+            <button id="voiceBtn" class="voice-btn" type="button" aria-label="Start voice input" title="Start voice input">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v5a3 3 0 0 0 3 3Z"></path>
+                <path d="M19 11a7 7 0 0 1-14 0"></path>
+                <path d="M12 18v4"></path>
+                <path d="M8 22h8"></path>
+              </svg>
+            </button>
+          </div>
           <div class="button-row">
             <button id="parseBtn" class="primary-btn" type="button">Run assistant</button>
           </div>

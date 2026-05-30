@@ -19,6 +19,7 @@ AI Google Meet Assistant is a FastAPI web application that helps users manage Go
 - Cancel meetings by event ID or meeting search text
 - Reschedule meetings by event ID or search text
 - Natural-language assistant for schedule, list, cancel, and reschedule prompts
+- Voice input with a microphone icon that automatically runs the assistant after speech recognition
 - Professional dashboard UI with toast notifications and clean activity cards
 
 ## Setup
@@ -78,7 +79,7 @@ http://localhost:8000
 
 ## Usage
 
-Click **Connect Google** and complete the OAuth flow. After authentication, use the assistant prompt or the manual tabs to manage meetings.
+Click **Connect Google** and complete the OAuth flow. After authentication, use the assistant prompt, the microphone icon, or the manual tabs to manage meetings. When you use voice input, speak the meeting command and the assistant runs it automatically after the transcript is captured.
 
 Example prompts:
 
@@ -98,9 +99,9 @@ Example prompts:
 
 ### Assistant Dashboard
 
-The main portal provides Google connection status, natural-language assistant controls, meeting management tools, and a clean activity area.
+The main portal provides Google connection status, natural-language and voice assistant controls, meeting management tools, and a clean activity area.
 
-![AI Google Meet Assistant dashboard](Assets/Screenshot%202026-05-30%20090209.png)
+![AI Google Meet Assistant dashboard](Assets/Screenshot%202026-05-30%20161300.png)
 
 ### Meeting Activity
 
