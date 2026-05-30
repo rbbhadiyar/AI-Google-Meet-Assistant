@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+credentials.json
+token.json
+tokens.json
+.tokens.json
+guide.txt
+*.pdf
+.vscode/

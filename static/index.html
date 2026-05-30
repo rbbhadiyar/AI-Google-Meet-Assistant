@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Google Meet Assistant</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div id="toastRegion" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand-block">
+        <div class="brand-mark" aria-hidden="true">AI</div>
+        <div>
+        <p class="eyebrow">Google Calendar + Meet</p>
+        <h1>AI Google Meet Assistant</h1>
+        </div>
+      </div>
+      <div class="auth-panel">
+        <span id="authStatus" class="status-pill">Not connected</span>
+        <button id="authBtn" class="primary-btn" type="button">Connect Google</button>
+        <button id="logoutBtn" class="ghost-btn" type="button">Logout</button>
+      </div>
+    </header>
+
+    <section class="workspace">
+      <aside class="sidebar">
+        <div class="quick-actions" role="tablist" aria-label="Meeting tools">
+          <button class="tool-tab is-active" type="button" data-panel="assistantPanel">Assistant</button>
+          <button class="tool-tab" type="button" data-panel="schedulePanel">Schedule</button>
+          <button class="tool-tab" type="button" data-panel="managePanel">Manage</button>
+        </div>
+
+        <div class="hint-box">
+          <strong>Assistant examples</strong>
+          <span>Schedule a meeting with Ram on Monday at 3 PM</span>
+          <span>Move my meeting with John to tomorrow at 4 PM</span>
+          <span>Cancel my meeting with Rahul</span>
+        </div>
+      </aside>
+
+      <section class="main-panel">
+        <section id="assistantPanel" class="tool-panel is-active">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Natural language</p>
+              <h2>Tell the assistant what to do</h2>
+            </div>
+            <button id="listBtn" class="secondary-btn" type="button">Refresh upcoming</button>
+          </div>
+          <textarea id="nlText" rows="5" placeholder="Schedule a meeting with Ram tomorrow at 4 PM for 30 mins"></textarea>
+          <div class="button-row">
+            <button id="parseBtn" class="primary-btn" type="button">Run assistant</button>
+          </div>
+        </section>
+
+        <section id="schedulePanel" class="tool-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Create Google Meet</p>
+              <h2>Schedule a meeting</h2>
+            </div>
+          </div>
+          <div class="form-grid">
+            <label>
+              Title
+              <input id="summary" type="text" placeholder="Team sync" />
+            </label>
+            <label>
+              Duration
+              <input id="duration" type="number" min="15" step="15" value="30" />
+            </label>
+            <label>
+              Date
+              <input id="date" type="date" />
+            </label>
+            <label>
+              Time
+              <input id="time" type="time" />
+            </label>
+            <label class="wide">
+              Attendees
+              <input id="attendees" type="text" placeholder="name@example.com, teammate@example.com" />
+            </label>
+            <label class="wide">
+              Notes
+              <input id="description" type="text" placeholder="Optional agenda or context" />
+            </label>
+          </div>
+          <div class="button-row">
+            <button id="scheduleBtn" class="primary-btn" type="button">Schedule Meet</button>
+          </div>
+        </section>
+
+        <section id="managePanel" class="tool-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Cancel or reschedule</p>
+              <h2>Manage existing meetings</h2>
+            </div>
+          </div>
+          <div class="split-grid">
+            <div class="action-box">
+              <h3>Cancel</h3>
+              <input id="cancelQuery" type="text" placeholder="Event ID or search text" />
+              <button id="cancelBtn" class="danger-btn" type="button">Cancel meeting</button>
+            </div>
+            <div class="action-box">
+              <h3>Reschedule</h3>
+              <input id="rescheduleQuery" type="text" placeholder="Event ID or search text" />
+              <div class="compact-grid">
+                <input id="newDate" type="date" />
+                <input id="newTime" type="time" />
+                <input id="newDuration" type="number" min="15" step="15" value="30" />
+              </div>
+              <button id="rescheduleBtn" class="secondary-btn" type="button">Move meeting</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="results-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Results</p>
+              <h2>Activity</h2>
+            </div>
+            <button id="clearOutputBtn" class="ghost-btn" type="button">Clear</button>
+          </div>
+          <div id="output" class="output-view">Ready</div>
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
